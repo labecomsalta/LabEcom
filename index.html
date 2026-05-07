@@ -1136,63 +1136,72 @@
       });
     }
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf80a2101a8c5ec',t:'MTc3MTM2MDE5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-  <!-- ═══════════════════════════ VISIT COUNTER ═══════════════════════════ -->
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf80a2101a8c5ec',t:'MTc3MTM2MDE5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>
+    // Mostrar total de visitas desde GoatCounter API
+    // Reemplazar SITE_CODE con tu código de GoatCounter
+    var GOAT_SITE = 'SITE_CODE';
+
+    fetch('https://' + GOAT_SITE + '.goatcounter.com/counter/TOTAL.json')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        var el = document.getElementById('visit-count');
+        if(el && data && data.count !== undefined){
+          // GoatCounter devuelve el número con formato "1,234" — convertimos
+          var num = parseInt(data.count.replace(/[^0-9]/g,''));
+          el.textContent = isNaN(num) ? data.count : num.toLocaleString('es-AR');
+        }
+      })
+      .catch(function(){
+        var el = document.getElementById('visit-count');
+        if(el) el.textContent = '···';
+      });
+  </script>
+
+
+  <!-- VISIT COUNTER — GoatCounter -->
   <div id="visit-counter" style="
-    position:fixed; bottom:1.2rem; right:1.2rem; z-index:999;
-    display:flex; align-items:center; gap:.55rem;
-    background:rgba(10,22,40,0.88); backdrop-filter:blur(12px);
-    border:1px solid rgba(0,212,170,0.3); border-radius:999px;
-    padding:.45rem 1rem .45rem .7rem;
-    box-shadow:0 4px 20px rgba(0,212,170,0.15);
-    font-family:'Space Grotesk',sans-serif;
-    transition: opacity .3s;
-    cursor:default;
-  " title="Visitas totales a LabEcom">
+    position:fixed;bottom:1.2rem;right:1.2rem;z-index:999;
+    display:flex;align-items:center;gap:.55rem;
+    background:rgba(10,22,40,0.92);backdrop-filter:blur(14px);
+    border:1px solid rgba(0,212,170,0.3);border-radius:999px;
+    padding:.45rem 1.1rem .45rem .75rem;
+    box-shadow:0 4px 24px rgba(0,212,170,0.18);
+    font-family:'Space Grotesk',sans-serif;">
     <span style="display:flex;align-items:center;justify-content:center;
-      width:28px;height:28px;border-radius:50%;
-      background:linear-gradient(135deg,var(--primary, #00d4aa),#00b894);">
-      <svg width="14" height="14" fill="none" stroke="#050d1a" stroke-width="2.2" viewBox="0 0 24 24">
+      width:30px;height:30px;border-radius:50%;
+      background:linear-gradient(135deg,#00d4aa,#00b894);flex-shrink:0">
+      <svg width="15" height="15" fill="none" stroke="#050d1a" stroke-width="2.2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
         <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
       </svg>
     </span>
-    <div style="line-height:1.1">
-      <div style="font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,212,170,0.7)">Visitas</div>
-      <div id="visit-count" style="font-size:.9rem;font-weight:700;color:#e4f0f6;min-width:48px">—</div>
+    <div style="line-height:1.2">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,212,170,.7)">Visitas</div>
+      <div id="visit-count" style="font-size:.92rem;font-weight:700;color:#e4f0f6;min-width:50px">—</div>
     </div>
   </div>
 
+  <!-- GoatCounter: tracking + display del total -->
+  <script data-goatcounter="https://labecom-unsa.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+
   <script>
-    // Counter using countapi.xyz (free, no registration needed)
-    (function() {
-      var namespace = 'labecom-unsa';
-      var key = 'website-visits-v1';
-      // Hit: increments counter and returns new value
-      fetch('https://api.countapi.xyz/hit/' + namespace + '/' + key)
-        .then(function(r){ return r.json(); })
-        .then(function(data){
+    // Espera a que GoatCounter cargue y luego obtiene el total de visitas
+    window.addEventListener('load', function() {
+      fetch('https://labecom-unsa.goatcounter.com/counter/TOTAL.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
           var el = document.getElementById('visit-count');
-          if(el && data && data.value !== undefined){
-            el.textContent = data.value.toLocaleString('es-AR');
+          if (el && data && data.count !== undefined) {
+            var num = parseInt(String(data.count).replace(/[^0-9]/g, ''));
+            el.textContent = isNaN(num) ? data.count : num.toLocaleString('es-AR');
           }
         })
-        .catch(function(){
-          // Fallback: get without incrementing
-          fetch('https://api.countapi.xyz/get/' + namespace + '/' + key)
-            .then(function(r){ return r.json(); })
-            .then(function(data){
-              var el = document.getElementById('visit-count');
-              if(el && data && data.value !== undefined){
-                el.textContent = data.value.toLocaleString('es-AR');
-              }
-            })
-            .catch(function(){
-              var el = document.getElementById('visit-count');
-              if(el) el.textContent = '—';
-            });
+        .catch(function() {
+          var el = document.getElementById('visit-count');
+          if (el) el.textContent = '···';
         });
-    })();
+    });
   </script>
 
 </body>
