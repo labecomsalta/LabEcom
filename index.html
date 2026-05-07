@@ -1172,11 +1172,39 @@
           if (el) el.textContent = '···';
         });
     });
+  </script><script>
+    (function() {
+      // counterapi.dev — gratuito, permite CORS, no requiere registro
+      var url = 'https://api.counterapi.dev/v1/labecom-unsa/visits/up';
+
+      fetch(url)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var el = document.getElementById('visit-count');
+          if (!el) return;
+          // La API devuelve { count: N }
+          var n = data.count || data.value || data.hits || 0;
+          el.textContent = parseInt(n).toLocaleString('es-AR');
+        })
+        .catch(function() {
+          // Si falla la API, mostrar conteo local acumulado
+          var el = document.getElementById('visit-count');
+          if (!el) return;
+          try {
+            var k = 'labecom_v';
+            var v = parseInt(localStorage.getItem(k) || '0') + 1;
+            localStorage.setItem(k, v);
+            el.textContent = v.toLocaleString('es-AR');
+          } catch(e) {
+            el.textContent = '—';
+          }
+        });
+    })();
   </script>
 
 
-  <!-- VISIT COUNTER — GoatCounter -->
-  <div style="
+  <!-- VISIT COUNTER -->
+  <div id="visit-counter" style="
     position:fixed;bottom:1.2rem;right:1.2rem;z-index:999;
     display:flex;align-items:center;gap:.6rem;
     background:rgba(10,22,40,0.92);backdrop-filter:blur(14px);
@@ -1194,16 +1222,54 @@
     </span>
     <div style="line-height:1.2">
       <div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,212,170,.7)">Visitas</div>
-      <!-- GoatCounter counter widget: se actualiza automáticamente -->
-      <img src="https://labecom-unsa.goatcounter.com/counter/TOTAL.svg"
-           alt="visitas"
-           style="height:18px;vertical-align:middle;filter:brightness(0) invert(1);">
+      <div id="visit-count" style="font-size:.92rem;font-weight:700;color:#e4f0f6;min-width:50px">···</div>
     </div>
   </div>
 
-  <!-- GoatCounter tracking: registra cada visita -->
+  <!-- GoatCounter tracking (registra visitas en el panel) -->
   <script data-goatcounter="https://labecom-unsa.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
+
+  <script>
+  (function () {
+    // ── Configuración JSONbin ──────────────────────────────────────────
+    // 1. Ir a https://jsonbin.io y crear cuenta gratuita
+    // 2. Crear un nuevo Bin con este contenido: {"visits": 0}
+    // 3. Copiar el BIN_ID y la API_KEY y pegarlos abajo
+    var BIN_ID  = '69fcfe12c0954111d8f03fbd';   // ej: "64f3a1b2e376201f851234ab"
+    var API_KEY = '$2a$10$6.DvFUrDoILlFmVlLcQ2qeMflZZTbcVDfnTuHfZNorKfxHIvZljcG';  // ej: "$2a$10$..."
+    // ─────────────────────────────────────────────────────────────────
+
+    var BASE = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
+    var HEADERS = {
+      'Content-Type': 'application/json',
+      'X-Master-Key': API_KEY
+    };
+
+    // Leer valor actual, incrementar y guardar
+    fetch(BASE + '/latest', { headers: HEADERS })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var current = (data.record && data.record.visits) ? data.record.visits : 0;
+        var newVal = current + 1;
+
+        // Mostrar en pantalla inmediatamente
+        var el = document.getElementById('visit-count');
+        if (el) el.textContent = newVal.toLocaleString('es-AR');
+
+        // Guardar nuevo valor
+        return fetch(BASE, {
+          method: 'PUT',
+          headers: HEADERS,
+          body: JSON.stringify({ visits: newVal })
+        });
+      })
+      .catch(function () {
+        var el = document.getElementById('visit-count');
+        if (el) el.textContent = '—';
+      });
+  })();
+  </script>
 
 </body>
 </html>
