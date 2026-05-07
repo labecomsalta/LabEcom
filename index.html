@@ -1155,37 +1155,7 @@
         var el = document.getElementById('visit-count');
         if(el) el.textContent = '···';
       });
-  </script>
-
-
-  <!-- VISIT COUNTER — GoatCounter -->
-  <div id="visit-counter" style="
-    position:fixed;bottom:1.2rem;right:1.2rem;z-index:999;
-    display:flex;align-items:center;gap:.55rem;
-    background:rgba(10,22,40,0.92);backdrop-filter:blur(14px);
-    border:1px solid rgba(0,212,170,0.3);border-radius:999px;
-    padding:.45rem 1.1rem .45rem .75rem;
-    box-shadow:0 4px 24px rgba(0,212,170,0.18);
-    font-family:'Space Grotesk',sans-serif;">
-    <span style="display:flex;align-items:center;justify-content:center;
-      width:30px;height:30px;border-radius:50%;
-      background:linear-gradient(135deg,#00d4aa,#00b894);flex-shrink:0">
-      <svg width="15" height="15" fill="none" stroke="#050d1a" stroke-width="2.2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-      </svg>
-    </span>
-    <div style="line-height:1.2">
-      <div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,212,170,.7)">Visitas</div>
-      <div id="visit-count" style="font-size:.92rem;font-weight:700;color:#e4f0f6;min-width:50px">—</div>
-    </div>
-  </div>
-
-  <!-- GoatCounter: tracking + display del total -->
-  <script data-goatcounter="https://labecom-unsa.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
-
-  <script>
+  </script><script>
     // Espera a que GoatCounter cargue y luego obtiene el total de visitas
     window.addEventListener('load', function() {
       fetch('https://labecom-unsa.goatcounter.com/counter/TOTAL.json')
@@ -1203,6 +1173,37 @@
         });
     });
   </script>
+
+
+  <!-- VISIT COUNTER — GoatCounter -->
+  <div style="
+    position:fixed;bottom:1.2rem;right:1.2rem;z-index:999;
+    display:flex;align-items:center;gap:.6rem;
+    background:rgba(10,22,40,0.92);backdrop-filter:blur(14px);
+    border:1px solid rgba(0,212,170,0.3);border-radius:999px;
+    padding:.45rem 1.1rem .45rem .75rem;
+    box-shadow:0 4px 24px rgba(0,212,170,0.18);
+    font-family:'Space Grotesk',sans-serif;">
+    <span style="display:flex;align-items:center;justify-content:center;
+      width:30px;height:30px;border-radius:50%;flex-shrink:0;
+      background:linear-gradient(135deg,#00d4aa,#00b894);">
+      <svg width="15" height="15" fill="none" stroke="#050d1a" stroke-width="2.2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+      </svg>
+    </span>
+    <div style="line-height:1.2">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(0,212,170,.7)">Visitas</div>
+      <!-- GoatCounter counter widget: se actualiza automáticamente -->
+      <img src="https://labecom-unsa.goatcounter.com/counter/TOTAL.svg"
+           alt="visitas"
+           style="height:18px;vertical-align:middle;filter:brightness(0) invert(1);">
+    </div>
+  </div>
+
+  <!-- GoatCounter tracking: registra cada visita -->
+  <script data-goatcounter="https://labecom-unsa.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 
 </body>
 </html>
